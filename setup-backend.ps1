@@ -44,16 +44,16 @@ az storage container create `
     --account-key $ACCOUNT_KEY
 
 # Create backend config file
-$backendConfig = @"
-resource_group_name  = "$RESOURCE_GROUP_NAME"
-storage_account_name = "$STORAGE_ACCOUNT_NAME"
-container_name       = "$CONTAINER_NAME"
-key                 = "autopot.tfstate"
-"@
+# $backendConfig = @"
+# resource_group_name  = "$RESOURCE_GROUP_NAME"
+# storage_account_name = "$STORAGE_ACCOUNT_NAME"
+# container_name       = "$CONTAINER_NAME"
+# key                 = "autopot.tfstate"
+# "@
 
-Set-Content -Path "backend.conf" -Value $backendConfig
+# Set-Content -Path "backend.conf" -Value $backendConfig
 
-Write-Host "Backend storage has been configured. You can now run: terraform init -backend-config=backend.conf" -ForegroundColor Green
+# Write-Host "Backend storage has been configured. You can now run: terraform init -backend-config=backend.conf" -ForegroundColor Green
 
 # Export environment variables for Terraform
 $env:ARM_ACCESS_KEY = $ACCOUNT_KEY
