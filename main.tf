@@ -58,7 +58,43 @@ module "identity_deception" {
 }
 
 # Deploy deceptive applications
+module "applications" {
+  source = "./modules/applications"
 
+  resource_group_name = var.resource_group_name
+  location           = var.location
+  environment        = var.environment
+  project_name       = var.project_name
+
+  # Optional: Override default SKUs (F1->Free plan  -  P1v2->premium plan)
+  admin_portal_sku    = "F1"
+  api_gateway_sku     = "F1"
+  hr_doc_manager_sku  = "F1"
+
+}
 
 # Deploy monitoring and alerting
+module "monitoring" {
+  source = "./modules/monitoring"
 
+  resource_group_name        = "your-resource-group"
+  location                   = "francecentral"
+  environment               = "dev"
+  project_name              = "autopot"
+  
+  # Key Vault reference for Slack webhook
+  slack_webhook_key_vault_id = azurerm_key_vault.main.id
+  
+  # Optional: customize alert settings
+  alert_severity    = 1  # Error
+  alert_frequency   = 5  # minutes
+  alert_time_window = 5  # minutes
+  
+  # Optional: adjust log retention
+  retention_in_days = 90
+  
+  # Additional tags
+  tags = {
+    Owner = "Security Team"
+  }
+}

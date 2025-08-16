@@ -1,0 +1,12 @@
+# Sample terraform.tfvars for the complete example
+
+environment        = "dev"
+project_name       = "autopot"
+location           = "francecentral"
+resource_group_name = "rg-autopot-dev"
+
+# Honey user settings
+honey_user_count = 5
+
+# Slack webhook secret name in Key Vault
+slack_webhook_secret_name = "slack-webhook-url"
