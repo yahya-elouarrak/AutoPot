@@ -25,15 +25,15 @@ AutoPot turns the tables on attackers by creating irresistible decoy environment
 │                        AUTOPOT ARCHITECTURE                     │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│  │   DECEPTION     │    │   MONITORING    │    │   NOTIFICATION  │
-│  │     LAYER       │───▶│     LAYER       │───▶│     LAYER       │
-│  │                 │    │                 │    │                 │
+│  ┌─────────────────┐    ┌─────────────────┐    ┌────────────────┐
+│  │   DECEPTION     │    │   MONITORING    │    │   NOTIFICATION │
+│  │     LAYER       │───▶│     LAYER       │───▶│     LAYER     │
+│  │                 │    │                 │    │                │
 │  │ • Honey Users   │    │ • Log Analytics │    │ • Azure Functions│
-│  │ • Web Portal    │    │ • Sentinel SIEM │    │ • Logic Apps    │
+│  │ • Web Portal    │    │ • Sentinel SIEM │    │ • Logic Apps   │
 │  │ • SQL Database  │    │ • 5 Detection   │    │ • Slack Alerts │
-│  │ • Key Vault     │    │   Rules         │    │                 │
-│  └─────────────────┘    └─────────────────┘    └─────────────────┘
+│  │ • Key Vault     │    │   Rules         │    │                │
+│  └─────────────────┘    └─────────────────┘    └────────────────┘
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
