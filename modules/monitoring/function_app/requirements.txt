@@ -1,0 +1,8 @@
+azure-functions==1.18.0
+azure-identity==1.15.0
+azure-keyvault-secrets==4.7.0
+azure-monitor-query==1.2.0
+requests==2.31.0
+azure-mgmt-monitor==6.0.2
+azure-mgmt-sql==3.0.1
+azure-mgmt-resource==23.0.1

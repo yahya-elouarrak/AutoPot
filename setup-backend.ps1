@@ -9,8 +9,6 @@ $LOCATION="francecentral"
 $ENVIRONMENT="dev"
 $PROJECT="autopot"
 
-# Format tags for Azure CLI
-$TagString = "Environment=$ENVIRONMENT Project=$PROJECT Purpose=ApplicationResources ManagedBy=DevOps"
 
 # Login to Azure
 Write-Host "Logging into Azure..." -ForegroundColor Blue
@@ -18,7 +16,7 @@ az login
 
 # Create resource group for all resources
 Write-Host "Creating resource group..." -ForegroundColor Blue
-az group create --name $RESOURCE_GROUP_NAME --location $LOCATION --tags $TagString
+az group create --name $RESOURCE_GROUP_NAME --location $LOCATION
 
 # Create storage account with enhanced security
 Write-Host "Creating storage account..." -ForegroundColor Blue
@@ -31,7 +29,6 @@ az storage account create `
     --min-tls-version TLS1_2 `
     --allow-shared-key-access true `
     --https-only true `
-    --tags $TagString
 
 # Get storage account key
 $ACCOUNT_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP_NAME --account-name $STORAGE_ACCOUNT_NAME --query '[0].value' -o tsv)

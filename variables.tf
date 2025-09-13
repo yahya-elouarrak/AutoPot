@@ -28,4 +28,10 @@ variable "honey_user_count" {
   type        = number
 }
 
+variable "slack_webhook_url" {
+  description = "Slack webhook URL for security notifications"
+  type        = string
+  sensitive   = true
+}
+
 

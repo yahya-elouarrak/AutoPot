@@ -1,0 +1,14 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "SLACK_WEBHOOK_URL": "https://hooks.slack.com/services/YOUR/WEBHOOK/URL",
+    "LOG_ANALYTICS_WORKSPACE_ID": "your-workspace-id",
+    "LOG_ANALYTICS_WORKSPACE_KEY": "your-workspace-key",
+    "KEYVAULT_URI": "https://your-keyvault.vault.azure.net/",
+    "SQL_SERVER_NAME": "your-sql-server",
+    "RESOURCE_GROUP_NAME": "rg-autopot",
+    "SUBSCRIPTION_ID": "your-subscription-id"
+  }
+}
