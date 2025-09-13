@@ -47,6 +47,7 @@ AutoPot turns the tables on attackers by creating irresistible decoy environment
 - PowerShell (for SQL database setup)
 - Slack workspace with webhook configured
 
+
 ### 1. Clone Repository
 
 ```bash
@@ -54,14 +55,20 @@ git clone https://github.com/yourusername/autopot.git
 cd autopot
 ```
 
-### 2. Configure Variables
+### 2. Setup the backend for terraform
+
+```bash
+./setup-backend.ps1
+```
+
+### 3. Configure Variables
 
 Edit (or create if not exists) `terraform.tfvars`:
 ```hcl
 slack_webhook_url = "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
 ```
 
-### 3. Deploy Infrastructure
+### 4. Deploy Infrastructure
 
 ```bash
 terraform init
