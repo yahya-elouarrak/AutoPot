@@ -1,4 +1,4 @@
-# AutoPot 🍯
+# AutoPot
 
 **Sophisticated Honeypot Infrastructure with Enterprise-Grade Monitoring**
 
