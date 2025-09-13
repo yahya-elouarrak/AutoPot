@@ -32,7 +32,7 @@ AutoPot turns the tables on attackers by creating irresistible decoy environment
 │  │ • Honey Users   │    │ • Log Analytics │    │ • MS Sentinel  │
 │  │ • Web Portal    │    │ • Sentinel SIEM │    │ • Slack Alerts │
 │  │ • SQL Database  │    │ • 5 Detection   │    │                │
-│  │ • Key Vault     │    │   Rules         │    │                │
+│  │                 │    │   Rules         │    │                │
 │  └─────────────────┘    └─────────────────┘    └────────────────┘
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
